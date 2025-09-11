@@ -1,0 +1,92 @@
+<div class="container mx-auto p-6">
+    <!-- Alert -->
+    <div *ngIf="alertMessage" [ngClass]="{
+      'bg-green-100 border-green-400 text-green-700': alertType === 'success',
+      'bg-red-100 border-red-400 text-red-700': alertType === 'error'
+    }" class="border px-4 py-3 rounded mb-6 animate-fade-in">
+        {{ alertMessage }}
+    </div>
+
+    <!-- Header and Add Button -->
+    <div class="flex justify-between items-center mb-6">
+        <h1 class="text-3xl font-bold text-gray-800">Authorized Statuses</h1>
+        <button (click)="toggleForm()"
+            class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition duration-200">
+            {{ isFormVisible ? 'Cancel' : 'Add New Status' }}
+        </button>
+    </div>
+
+    <!-- Form -->
+    <div *ngIf="isFormVisible" class="bg-white p-6 rounded-lg shadow-md mb-6">
+        <h2 class="text-xl font-semibold mb-4">{{ isEditing ? 'Edit Status' : 'Add Status' }}</h2>
+        <form (ngSubmit)="saveStatus()" class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Code</label>
+                <input [(ngModel)]="selectedStatus.codeAtorisedStatus" name="codeAtorisedStatus"
+                    class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:ring-blue-500 focus:border-blue-500"
+                    placeholder="Enter code" required />
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Value</label>
+                <input [(ngModel)]="selectedStatus.valueAtorisedStatus" name="valueAtorisedStatus"
+                    class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:ring-blue-500 focus:border-blue-500"
+                    placeholder="Enter value" required />
+            </div>
+            <div class="flex items-center">
+                <input [(ngModel)]="selectedStatus.okStatus" name="okStatus" type="checkbox"
+                    class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" />
+                <label class="ml-2 text-sm text-gray-700">OK Status</label>
+            </div>
+            <div class="flex items-center">
+                <input [(ngModel)]="selectedStatus.nokStatus" name="nokStatus" type="checkbox"
+                    class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" />
+                <label class="ml-2 text-sm text-gray-700">NOK Status</label>
+            </div>
+            <div class="flex items-center">
+                <input [(ngModel)]="selectedStatus.allStatus" name="allStatus" type="checkbox"
+                    class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" />
+                <label class="ml-2 text-sm text-gray-700">All Status</label>
+            </div>
+            <div class="sm:col-span-2">
+                <button type="submit"
+                    class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition duration-200">
+                    {{ isEditing ? 'Update' : 'Save' }}
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Table -->
+    <div class="overflow-x-auto">
+        <table class="min-w-full bg-white shadow-md rounded-lg">
+            <thead class="bg-gray-100">
+                <tr>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Code</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Value
+                    </th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">OK</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">NOK</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">All</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions
+                    </th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200">
+                <tr *ngFor="let status of aturizedStatuses" (click)="editStatus(status)"
+                    class="cursor-pointer hover:bg-gray-50">
+                    <td class="px-6 py-4 whitespace-nowrap">{{ status.codeAtorisedStatus }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">{{ status.valueAtorisedStatus }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">{{ status.okStatus ? 'Yes' : 'No' }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">{{ status.nokStatus ? 'Yes' : 'No' }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">{{ status.allStatus ? 'Yes' : 'No' }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <button (click)="deleteStatus(status.idewm_Aturized_Status!); $event.stopPropagation()"
+                            class="text-red-600 hover:text-red-800">
+                            Delete
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,131 @@
+<div class="container mx-auto p-6">
+    <div *ngIf="alertMessage" [ngClass]="{
+      'bg-green-100 border-green-400 text-green-700': alertType === 'success',
+      'bg-red-100 border-red-400 text-red-700': alertType === 'error'
+    }" class="border px-4 py-3 rounded mb-6 animate-fade-in">
+        {{ alertMessage }}
+    </div>
+
+    <div class="flex justify-between items-center mb-6">
+        <h1 class="text-3xl font-bold text-gray-800">Storage Types</h1>
+        <button (click)="toggleForm()"
+            class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition duration-200">
+            {{ isFormVisible ? 'Cancel' : 'Add New Type' }}
+        </button>
+    </div>
+
+    <div *ngIf="isFormVisible" class="bg-white p-6 rounded-lg shadow-md mb-6">
+        <h2 class="text-xl font-semibold mb-4">{{ isEditing ? 'Edit Storage Type' : 'Add Storage Type' }}</h2>
+        <form (ngSubmit)="saveType()" class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Code</label>
+                <input [(ngModel)]="selectedType.code" name="code"
+                    class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:ring-blue-500 focus:border-blue-500"
+                    placeholder="Enter code (e.g., ST001)" required />
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Libelle</label>
+                <input [(ngModel)]="selectedType.lib" name="lib"
+                    class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:ring-blue-500 focus:border-blue-500"
+                    placeholder="Enter libelle (e.g., Main Storage)" required />
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Authorized Status Code</label>
+                <input [(ngModel)]="selectedType.codeAuthorizedStatus" name="codeAuthorizedStatus"
+                    class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:ring-blue-500 focus:border-blue-500"
+                    placeholder="Enter authorized status code" />
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Aturized Status</label>
+                <select [(ngModel)]="selectedType.idewmAturizedStatus" name="idewmAturizedStatus"
+                    class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:ring-blue-500 focus:border-blue-500">
+                    <option [ngValue]="undefined">Select Status</option>
+                    <option *ngFor="let status of aturizedStatuses" [ngValue]="status.idewm_Aturized_Status">
+                        {{ status.idewm_Aturized_Status }}
+                    </option>
+                </select>
+            </div>
+            <div class="sm:col-span-2">
+                <label class="flex items-center">
+                    <input [(ngModel)]="selectedType.validateByQuality" name="validateByQuality" type="checkbox"
+                        class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" />
+                    <span class="ml-2 text-sm text-gray-700">Validate by Quality</span>
+                </label>
+            </div>
+            <div class="sm:col-span-2">
+                <label class="flex items-center">
+                    <input [(ngModel)]="selectedType.withCheckAuthorizedStatus" name="withCheckAuthorizedStatus"
+                        type="checkbox" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" />
+                    <span class="ml-2 text-sm text-gray-700">Check Authorized Status</span>
+                </label>
+            </div>
+            <div class="sm:col-span-2">
+                <label class="flex items-center">
+                    <input [(ngModel)]="selectedType.noInputRewinding" name="noInputRewinding" type="checkbox"
+                        class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" />
+                    <span class="ml-2 text-sm text-gray-700">No Input Rewinding</span>
+                </label>
+            </div>
+            <div class="sm:col-span-2">
+                <label class="flex items-center">
+                    <input [(ngModel)]="selectedType.isIncomplete" name="isIncomplete" type="checkbox"
+                        class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" />
+                    <span class="ml-2 text-sm text-gray-700">Is Incomplete</span>
+                </label>
+            </div>
+            <div class="sm:col-span-2">
+                <button type="submit"
+                    class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition duration-200">
+                    {{ isEditing ? 'Update' : 'Save' }}
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <div class="overflow-x-auto">
+        <table class="min-w-full bg-white shadow-md rounded-lg">
+            <thead class="bg-gray-100">
+                <tr>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Code</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Libelle
+                    </th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Authorized Status</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aturized
+                        Status</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Validate
+                        by Quality</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Check
+                        Status</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No
+                        Rewinding</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Incomplete</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions
+                    </th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200">
+                <tr *ngFor="let type of storageTypesList" (click)="editType(type)"
+                    class="cursor-pointer hover:bg-gray-50">
+                    <td class="px-6 py-4 whitespace-nowrap">{{ type.id || '-' }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">{{ type.code || '-' }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">{{ type.lib || '-' }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">{{ type.codeAuthorizedStatus || '-' }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">{{ getAturizedStatusLabel(type.idewmAturizedStatus) }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">{{ type.validateByQuality ? 'Yes' : 'No' }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">{{ type.withCheckAuthorizedStatus ? 'Yes' : 'No' }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">{{ type.noInputRewinding ? 'Yes' : 'No' }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">{{ type.isIncomplete ? 'Yes' : 'No' }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <button (click)="deleteType(type.id!); $event.stopPropagation()"
+                            class="text-red-600 hover:text-red-800">
+                            Delete
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

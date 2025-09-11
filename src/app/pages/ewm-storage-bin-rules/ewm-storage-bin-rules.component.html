@@ -1,0 +1,78 @@
+<div *ngIf="alertMessage" class="p-4 mb-4 text-white rounded" [ngClass]="{
+  'bg-green-500': alertType === 'success',
+  'bg-red-500': alertType === 'error'
+}">
+    {{ alertMessage }}
+    <button (click)="alertMessage = null; alertType = null" class="float-right text-white underline">Dismiss</button>
+</div>
+
+<div class="flex justify-between items-center mb-4">
+    <h1 class="text-xl font-bold">Storage Bin Rules</h1>
+    <button (click)="toggleForm()" class="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600 transition">
+        {{ isFormVisible ? 'Cancel' : 'Add New Rule' }}
+    </button>
+</div>
+
+<form *ngIf="isFormVisible" (ngSubmit)="saveRule()" class="mt-4 space-y-6 bg-gray-50 p-6 rounded-lg shadow">
+    <div>
+        <label for="fromLocation" class="block text-sm font-medium text-gray-700">From Location</label>
+        <input id="fromLocation" [(ngModel)]="selectedRule.ewm_CodeLocation_FROM" name="ewm_CodeLocation_FROM"
+            class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Enter from location (e.g., ST1)" required>
+    </div>
+
+    <div>
+        <label class="block text-sm font-medium text-gray-700">Allow Transfer To</label>
+        <div class="space-y-2 mt-2">
+            <div *ngFor="let type of storageTypes" class="flex items-center">
+                <input type="checkbox" [id]="'allow-' + type.code" [checked]="selectedAllowTo.includes(type.code)"
+                    (change)="toggleAllow(type, $event)" class="mr-2 h-4 w-4 text-blue-500 focus:ring-blue-500">
+                <label [for]="'allow-' + type.code" class="text-gray-700">{{ type.code }} - {{ type.lib }}</label>
+            </div>
+        </div>
+        <p class="mt-2 text-sm text-gray-500">Selected: {{ selectedRule.allowTranferTO }}</p>
+    </div>
+
+    <div>
+        <label for="blockTransferTo" class="block text-sm font-medium text-gray-700">Block Transfer To</label>
+        <input id="blockTransferTo" [(ngModel)]="selectedRule.blockTranferTO" name="blockTransferTo"
+            class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Enter blocked transfers (comma-separated)">
+    </div>
+
+    <div class="flex space-x-4">
+        <button type="submit" class="px-4 py-2 text-white bg-green-500 rounded hover:bg-green-600 transition"
+            [disabled]="!selectedRule.ewm_CodeLocation_FROM || !selectedAllowTo.length">
+            {{ isEditing ? 'Update Rule' : 'Create Rule' }}
+        </button>
+        <button type="button" (click)="toggleForm()"
+            class="px-4 py-2 text-gray-700 bg-gray-200 rounded hover:bg-gray-300 transition">
+            Cancel
+        </button>
+    </div>
+</form>
+
+<div class="mt-6">
+    <h2 class="text-lg font-bold">Existing Rules</h2>
+    <div *ngIf="isLoading" class="text-center py-4">
+        <p class="text-gray-500">Loading rules...</p>
+    </div>
+    <div *ngIf="!isLoading && rules.length === 0" class="text-center py-4">
+        <p class="text-gray-500">No rules found.</p>
+    </div>
+    <div *ngFor="let rule of rules" class="p-4 mt-2 border rounded bg-white shadow">
+        <p><strong>From:</strong> {{ rule.ewm_CodeLocation_FROM }}</p>
+        <p><strong>Allow To:</strong> {{ rule.allowTranferTO }}</p>
+        <p><strong>Block To:</strong> {{ rule.blockTranferTO }}</p>
+        <div class="mt-3 space-x-2">
+            <button (click)="editRule(rule)"
+                class="px-3 py-1 text-white bg-yellow-500 rounded hover:bg-yellow-600 transition">
+                Edit
+            </button>
+            <button (click)="deleteRule(rule.idemw_Location_Rules!)"
+                class="px-3 py-1 text-white bg-red-500 rounded hover:bg-red-600 transition">
+                Delete
+            </button>
+        </div>
+    </div>
+</div>
