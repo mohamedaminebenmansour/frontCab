@@ -24,6 +24,7 @@ import { EwmStorageBinTypeComponent } from './pages/ewm-storage-bin-type/ewm-sto
 import { EwmStorageBinGroupeComponent } from './pages/ewm-storage-bin-groupe/ewm-storage-bin-groupe.component';
 import { EwmStorageTypeComponent } from './pages/ewm-storage-type/ewm-storage-type.component';
 import { EWMStorageBinRulesComponent } from './pages/ewm-storage-bin-rules/ewm-storage-bin-rules.component';
+import { EwmStorageBinsComponent } from './pages/ewm-storage-bins/ewm-storage-bins.component';
 
 export const routes: Routes = [
   {
@@ -135,6 +136,11 @@ export const routes: Routes = [
         path: 'ewm-storage-bin-rules',
         component: EWMStorageBinRulesComponent,
         title: 'Angular Storage Bin Rules| TailAdmin - Angular Admin Dashboard Template',
+      },
+      {
+        path: 'storage-bins',
+        component: EwmStorageBinsComponent,
+        title: 'Angular Storage Bin| TailAdmin - Angular Admin Dashboard Template',
       },
     ],
   },
