@@ -92,14 +92,13 @@ export class EwmStorageBinsComponent implements OnInit {
     this.apiService.getAturizedStatuses().subscribe({
       next: (data) => {
         console.log('Received raw atorized statuses from backend:', data);
-        // Map to handle casing/spelling variations (e.g., 'codeAtorisedStatus' vs 'CodeAuthorizedStatus')
         this.atorizedStatuses = data.map((d: any) => ({
-          idewm_Aturized_Status: d.idewm_Aturized_Status || d.idEwm_Aturized_Status || d.idewm_Authorized_Status || d.id,
-          codeAtorisedStatus: d.codeAtorisedStatus || d.CodeAtorisedStatus || d.codeAuthorizedStatus || d.CodeAuthorizedStatus || d.code,
-          valueAtorisedStatus: d.valueAtorisedStatus || d.ValueAtorisedStatus || d.valueAuthorizedStatus || d.ValueAuthorizedStatus || d.value,
-          okStatus: d.okStatus || d.OkStatus,
-          nokStatus: d.nokStatus || d.NokStatus,
-          allStatus: d.allStatus || d.AllStatus
+          idewm_Aturized_Status: d.idewM_Aturized_Status || d.idewm_Aturized_Status || d.id,
+          codeAtorisedStatus: d.idewM_Aturized_Status.toString(),  // Use ID as code since actual code is null
+          valueAtorisedStatus: `OK: ${d.okStatus || 'N/A'} | NOK: ${d.nokStatus || 'N/A'} | All: ${d.allStatus || 'N/A'}`,  // Generate value from flags
+          okStatus: d.okStatus,
+          nokStatus: d.nokStatus,
+          allStatus: d.allStatus
         }));
         console.log('Mapped atorized statuses:', this.atorizedStatuses);
       },
