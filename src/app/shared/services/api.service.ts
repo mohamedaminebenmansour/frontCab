@@ -255,23 +255,23 @@ getStorageTypes(): Observable<EWM_StorageType[]> {
 
   // EWM_StorageBin_Details CRUD (Added EWM_ for consistency)
   getStorageBinDetails(): Observable<EWM_StorageBin_Details[]> {
-    return this.http.get<EWM_StorageBin_Details[]>(`${this.apiUrl}/EWMStorageBinDetails`)
+    return this.http.get<EWM_StorageBin_Details[]>(`${this.apiUrl}/StorageBinDetails`)
       .pipe(catchError(this.handleError));
   }
   getStorageBinDetail(id: number): Observable<EWM_StorageBin_Details> {
-    return this.http.get<EWM_StorageBin_Details>(`${this.apiUrl}/EWMStorageBinDetails/${id}`)
+    return this.http.get<EWM_StorageBin_Details>(`${this.apiUrl}/StorageBinDetails/${id}`)
       .pipe(catchError(this.handleError));
   }
   createStorageBinDetail(detail: EWM_StorageBin_Details): Observable<EWM_StorageBin_Details> {
-    return this.http.post<EWM_StorageBin_Details>(`${this.apiUrl}/EWMStorageBinDetails`, detail, this.httpOptions)
+    return this.http.post<EWM_StorageBin_Details>(`${this.apiUrl}/StorageBinDetails`, detail, this.httpOptions)
       .pipe(catchError(this.handleError));
   }
   updateStorageBinDetail(id: number, detail: EWM_StorageBin_Details): Observable<EWM_StorageBin_Details> {
-    return this.http.put<EWM_StorageBin_Details>(`${this.apiUrl}/EWMStorageBinDetails/${id}`, detail, this.httpOptions)
+    return this.http.put<EWM_StorageBin_Details>(`${this.apiUrl}/StorageBinDetails/${id}`, detail, this.httpOptions)
       .pipe(catchError(this.handleError));
   }
   deleteStorageBinDetail(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/EWMStorageBinDetails/${id}`)
+    return this.http.delete<void>(`${this.apiUrl}/StorageBinDetails/${id}`)
       .pipe(catchError(this.handleError));
   }
 
