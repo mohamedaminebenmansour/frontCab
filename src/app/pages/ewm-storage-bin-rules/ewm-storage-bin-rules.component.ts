@@ -109,9 +109,12 @@ export class EWMStorageBinRulesComponent implements OnInit {
       return;
     }
 
-    const ruleToSend: EWM_StorageBin_Rules = {
-      ...this.selectedRule,
-      allowTranferTO: this.selectedAllowTo.join(',')
+    // Map to backend DTO structure
+    const ruleToSend: any = {
+      id: this.selectedRule.idemw_Location_Rules,
+      EWM_Code_StorageType_From: this.selectedRule.ewm_CodeLocation_FROM,
+      allowTranferTO: this.selectedAllowTo.join(','),
+      blockTranferTO: this.selectedRule.blockTranferTO
     };
 
     this.isLoading = true;

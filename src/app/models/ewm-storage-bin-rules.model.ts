@@ -7,3 +7,10 @@ export interface EWM_StorageBin_Rules {
   blockTranferTO?: string;
   storageBin?: EWM_StorageBin; // Optional for nested data
 }
+
+export interface StorageTypeRulesDto {
+  id?: number;
+  EWM_Code_StorageType_From: string;
+  allowTranferTO?: string;
+  blockTranferTO?: string;
+}
