@@ -26,6 +26,8 @@ import { EwmStorageTypeComponent } from './pages/ewm-storage-type/ewm-storage-ty
 import { EWMStorageBinRulesComponent } from './pages/ewm-storage-bin-rules/ewm-storage-bin-rules.component';
 import { EwmStorageBinsComponent } from './pages/ewm-storage-bins/ewm-storage-bins.component';
 import { EwmStorageBinDetailsComponent } from './pages/ewm-storage-bin-details/ewm-storage-bin-details.component';
+import { HandlingUnitsComponent } from './pages/handling-units/handling-units.component';
+import { StockMovementsComponent } from './pages/stock-movements/stock-movements.component';
 
 export const routes: Routes = [
   {
@@ -36,117 +38,132 @@ export const routes: Routes = [
         path: '',
         component: EcommerceComponent,
         pathMatch: 'full',
-        title: 'Angular Ecommerce Dashboard | TailAdmin - Angular Admin Dashboard Template',
+        title: 'Ecommerce Dashboard ',
       },
       {
         path: 'calendar',
         component: CalenderComponent,
-        title: 'Angular Calender | TailAdmin - Angular Admin Dashboard Template',
+        title: 'Calender ',
       },
       {
         path: 'profile',
         component: ProfileComponent,
-        title: 'Angular Profile Dashboard | TailAdmin - Angular Admin Dashboard Template',
+        title: 'Profile Dashboard ',
       },
       {
         path: 'form-elements',
         component: FormElementsComponent,
-        title: 'Angular Form Elements Dashboard | TailAdmin - Angular Admin Dashboard Template',
+        title: 'Form Elements Dashboard ',
       },
       {
         path: 'basic-tables',
         component: BasicTablesComponent,
-        title: 'Angular Basic Tables Dashboard | TailAdmin - Angular Admin Dashboard Template',
+        title: 'Basic Tables Dashboard ',
       },
       {
         path: 'blank',
         component: BlankComponent,
-        title: 'Angular Blank Dashboard | TailAdmin - Angular Admin Dashboard Template',
+        title: 'Blank Dashboard ',
       },
       {
         path: 'invoice',
         component: InvoicesComponent,
-        title: 'Angular Invoice Details Dashboard | TailAdmin - Angular Admin Dashboard Template',
+        title: 'Invoice Details Dashboard ',
       },
       {
         path: 'line-chart',
         component: LineChartComponent,
-        title: 'Angular Line Chart Dashboard | TailAdmin - Angular Admin Dashboard Template',
+        title: 'Line Chart Dashboard ',
       },
       {
         path: 'bar-chart',
         component: BarChartComponent,
-        title: 'Angular Bar Chart Dashboard | TailAdmin - Angular Admin Dashboard Template',
+        title: 'Bar Chart Dashboard ',
       },
       {
         path: 'alerts',
         component: AlertsComponent,
-        title: 'Angular Alerts Dashboard | TailAdmin - Angular Admin Dashboard Template',
+        title: 'Alerts Dashboard ',
       },
       {
         path: 'avatars',
         component: AvatarElementComponent,
-        title: 'Angular Avatars Dashboard | TailAdmin - Angular Admin Dashboard Template',
+        title: 'Avatars Dashboard ',
       },
       {
         path: 'badge',
         component: BadgesComponent,
-        title: 'Angular Badges Dashboard | TailAdmin - Angular Admin Dashboard Template',
+        title: 'Badges Dashboard ',
       },
       {
         path: 'buttons',
         component: ButtonsComponent,
-        title: 'Angular Buttons Dashboard | TailAdmin - Angular Admin Dashboard Template',
+        title: 'Buttons Dashboard ',
       },
       {
         path: 'images',
         component: ImagesComponent,
-        title: 'Angular Images Dashboard | TailAdmin - Angular Admin Dashboard Template',
+        title: 'Images Dashboard ',
       },
       {
         path: 'videos',
         component: VideosComponent,
-        title: 'Angular Videos Dashboard | TailAdmin - Angular Admin Dashboard Template',
+        title: 'Videos Dashboard ',
       },
       {
         path: 'aturized-statuses',
         component: EWMAturizedStatusComponent,
-        title: 'Angular Authorized Statuses Dashboard | TailAdmin - Angular Admin Dashboard Template',
+        title: 'Authorized Statuses Dashboard ',
       },
       {
         path: 'parck-display-groupes',
         component: EWMParckDisplayGroupeComponent,
-        title: 'Angular Park Display Groups Dashboard | TailAdmin - Angular Admin Dashboard Template',
+        title: 'Park Display Groups Dashboard ',
       }, // Added route
       {
         path: 'ewm-storage-bin-type',
         component: EwmStorageBinTypeComponent,
-        title: 'Angular Park Storage Bin Type | TailAdmin - Angular Admin Dashboard Template',
+        title: 'Park Storage Bin Type ',
       }, // Added route
       {
         path: 'ewm-storage-bin-groupe',
         component: EwmStorageBinGroupeComponent,
-        title: 'Angular Park Storage Bin groupe | TailAdmin - Angular Admin Dashboard Template',
+        title: 'Park Storage Bin groupe ',
       }, // Added route
       {
         path: 'ewm-storage-type',
         component: EwmStorageTypeComponent,
-        title: 'Angular Park Storage Type | TailAdmin - Angular Admin Dashboard Template',
+        title: 'Park Storage Type ',
       },
       {
         path: 'ewm-storage-bin-rules',
         component: EWMStorageBinRulesComponent,
-        title: 'Angular Storage Bin Rules| TailAdmin - Angular Admin Dashboard Template',
+        title: 'Storage Bin Rules',
       },
       {
         path: 'storage-bins',
         component: EwmStorageBinsComponent,
-        title: 'Angular Storage Bin| TailAdmin - Angular Admin Dashboard Template',
+        title: 'Storage Bin',
       },
       {
         path: 'storage-bin-details',
         component: EwmStorageBinDetailsComponent,
-        title: 'Angular Storage Bin Details| TailAdmin - Angular Admin Dashboard Template',
+        title: 'Storage Bin Details',
+      },
+      {
+        path: 'storage-bin-details',
+        component: EwmStorageBinDetailsComponent,
+        title: 'Storage Bin Details',
+      },
+      {
+        path: 'handling-units',
+        component: HandlingUnitsComponent,
+        title: 'Storage Bin Details',
+      },
+      {
+        path: 'stock-movements',
+        component: StockMovementsComponent,
+        title: 'Stock Movements',
       },
     ],
   },
@@ -154,17 +171,17 @@ export const routes: Routes = [
   {
     path: 'signin',
     component: SignInComponent,
-    title: 'Angular Sign In Dashboard | TailAdmin - Angular Admin Dashboard Template',
+    title: 'Sign In Dashboard ',
   },
   {
     path: 'signup',
     component: SignUpComponent,
-    title: 'Angular Sign Up Dashboard | TailAdmin - Angular Admin Dashboard Template',
+    title: 'Sign Up Dashboard ',
   },
   // error pages
   {
     path: '**',
     component: NotFoundComponent,
-    title: 'Angular NotFound Dashboard | TailAdmin - Angular Admin Dashboard Template',
+    title: 'NotFound Dashboard ',
   },
 ];

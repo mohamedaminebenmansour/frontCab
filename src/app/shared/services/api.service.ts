@@ -277,45 +277,45 @@ getStorageTypes(): Observable<EWM_StorageType[]> {
 
   // HandlingUnit CRUD
   getHandlingUnits(): Observable<HandlingUnit[]> {
-    return this.http.get<HandlingUnit[]>(`${this.apiUrl}/HandlingUnits`)
+    return this.http.get<HandlingUnit[]>(`${this.apiUrl}/HandlingUnit`)
       .pipe(catchError(this.handleError));
   }
   getHandlingUnit(id: number): Observable<HandlingUnit> {
-    return this.http.get<HandlingUnit>(`${this.apiUrl}/HandlingUnits/${id}`)
+    return this.http.get<HandlingUnit>(`${this.apiUrl}/HandlingUnit/${id}`)
       .pipe(catchError(this.handleError));
   }
   createHandlingUnit(unit: HandlingUnit): Observable<HandlingUnit> {
-    return this.http.post<HandlingUnit>(`${this.apiUrl}/HandlingUnits`, unit, this.httpOptions)
+    return this.http.post<HandlingUnit>(`${this.apiUrl}/HandlingUnit`, unit, this.httpOptions)
       .pipe(catchError(this.handleError));
   }
   updateHandlingUnit(id: number, unit: HandlingUnit): Observable<HandlingUnit> {
-    return this.http.put<HandlingUnit>(`${this.apiUrl}/HandlingUnits/${id}`, unit, this.httpOptions)
+    return this.http.put<HandlingUnit>(`${this.apiUrl}/HandlingUnit/${id}`, unit, this.httpOptions)
       .pipe(catchError(this.handleError));
   }
   deleteHandlingUnit(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/HandlingUnits/${id}`)
+    return this.http.delete<void>(`${this.apiUrl}/HandlingUnit/${id}`)
       .pipe(catchError(this.handleError));
   }
 
   // StockMovement CRUD
   getStockMovements(): Observable<StockMovement[]> {
-    return this.http.get<StockMovement[]>(`${this.apiUrl}/StockMovements`)
+    return this.http.get<StockMovement[]>(`${this.apiUrl}/StockMovement`)
       .pipe(catchError(this.handleError));
   }
   getStockMovement(id: number): Observable<StockMovement> {
-    return this.http.get<StockMovement>(`${this.apiUrl}/StockMovements/${id}`)
+    return this.http.get<StockMovement>(`${this.apiUrl}/StockMovement/${id}`)
       .pipe(catchError(this.handleError));
   }
   createStockMovement(movement: StockMovement): Observable<StockMovement> {
-    return this.http.post<StockMovement>(`${this.apiUrl}/StockMovements`, movement, this.httpOptions)
+    return this.http.post<StockMovement>(`${this.apiUrl}/StockMovement`, movement, this.httpOptions)
       .pipe(catchError(this.handleError));
   }
   updateStockMovement(id: number, movement: StockMovement): Observable<StockMovement> {
-    return this.http.put<StockMovement>(`${this.apiUrl}/StockMovements/${id}`, movement, this.httpOptions)
+    return this.http.put<StockMovement>(`${this.apiUrl}/StockMovement/${id}`, movement, this.httpOptions)
       .pipe(catchError(this.handleError));
   }
   deleteStockMovement(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/StockMovements/${id}`)
+    return this.http.delete<void>(`${this.apiUrl}/StockMovement/${id}`)
       .pipe(catchError(this.handleError));
   }
 }

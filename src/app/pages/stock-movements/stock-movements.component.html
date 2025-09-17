@@ -1,0 +1,129 @@
+<div *ngIf="alertMessage" class="p-4 mb-4 text-white rounded" [ngClass]="{
+  'bg-green-500': alertType === 'success',
+  'bg-red-500': alertType === 'error'
+}">
+    {{ alertMessage }}
+    <button (click)="alertMessage = null; alertType = null" class="float-right text-white underline">Dismiss</button>
+</div>
+
+<div class="flex justify-between items-center mb-4">
+    <h1 class="text-xl font-bold">Stock Movements</h1>
+    <button (click)="toggleForm()" class="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600 transition">
+        {{ isFormVisible ? 'Cancel' : 'Add New Movement' }}
+    </button>
+</div>
+
+<form *ngIf="isFormVisible" (ngSubmit)="saveMovement()" class="mt-4 space-y-6 bg-gray-50 p-6 rounded-lg shadow">
+    <div>
+        <label for="movementType" class="block text-sm font-medium text-gray-700">Movement Type</label>
+        <input id="movementType" [(ngModel)]="selectedMovement.movementType" name="movementType"
+            class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Enter movement type (e.g., Transfer)" required>
+    </div>
+
+    <div>
+        <label for="sourceBinCode" class="block text-sm font-medium text-gray-700">Source Bin Code</label>
+        <select id="sourceBinCode" [(ngModel)]="selectedMovement.sourceBinCode" name="sourceBinCode"
+            class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+            <option value="">Select Source Bin</option>
+            <option *ngFor="let bin of storageBins" [value]="bin.ewm_Lib_CodeLocation">
+                {{ bin.ewm_Lib_CodeLocation }} (Type: {{ bin.ewm_Code_StorageType }})
+            </option>
+        </select>
+    </div>
+
+    <div>
+        <label for="destinationBinCode" class="block text-sm font-medium text-gray-700">Destination Bin Code</label>
+        <select id="destinationBinCode" [(ngModel)]="selectedMovement.destinationBinCode" name="destinationBinCode"
+            class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+            <option value="">Select Destination Bin</option>
+            <option *ngFor="let bin of storageBins" [value]="bin.ewm_Lib_CodeLocation">
+                {{ bin.ewm_Lib_CodeLocation }} (Type: {{ bin.ewm_Code_StorageType }})
+            </option>
+        </select>
+    </div>
+
+    <div>
+        <label for="handlingUnitID" class="block text-sm font-medium text-gray-700">Handling Unit ID</label>
+        <select id="handlingUnitID" [(ngModel)]="selectedMovement.handlingUnitID" name="handlingUnitID"
+            class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+            <option value="">Select Handling Unit</option>
+            <option *ngFor="let unit of handlingUnits" [value]="unit.idHandlingUnit">
+                {{ unit.serialNumber }} (Item: {{ unit.item }})
+            </option>
+        </select>
+    </div>
+
+    <div>
+        <label for="movedQty" class="block text-sm font-medium text-gray-700">Moved Qty</label>
+        <input id="movedQty" type="number" [(ngModel)]="selectedMovement.movedQty" name="movedQty"
+            class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Enter moved quantity" required>
+    </div>
+
+    <div>
+        <label for="movementDate" class="block text-sm font-medium text-gray-700">Movement Date</label>
+        <input id="movementDate" type="date" [(ngModel)]="selectedMovement.movementDate" name="movementDate"
+            class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+    </div>
+
+    <div>
+        <label for="executedBy" class="block text-sm font-medium text-gray-700">Executed By</label>
+        <input id="executedBy" [(ngModel)]="selectedMovement.executedBy" name="executedBy"
+            class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Enter executed by (e.g., User123)">
+    </div>
+
+    <div>
+        <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
+        <select id="status" [(ngModel)]="selectedMovement.status" name="status"
+            class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+            <option value="">Select Status</option>
+            <option value="Completed">Completed</option>
+            <option value="Pending">Pending</option>
+            <option value="Cancelled">Cancelled</option>
+            <option value="In Progress">In Progress</option>
+        </select>
+    </div>
+
+    <div class="flex space-x-4">
+        <button type="submit" class="px-4 py-2 text-white bg-green-500 rounded hover:bg-green-600 transition"
+            [disabled]="!selectedMovement.movementType || !selectedMovement.sourceBinCode || !selectedMovement.destinationBinCode || !selectedMovement.handlingUnitID || !selectedMovement.movedQty || !selectedMovement.movementDate || !selectedMovement.status">
+            {{ isEditing ? 'Update Movement' : 'Create Movement' }}
+        </button>
+        <button type="button" (click)="toggleForm()"
+            class="px-4 py-2 text-gray-700 bg-gray-200 rounded hover:bg-gray-300 transition">
+            Cancel
+        </button>
+    </div>
+</form>
+
+<div class="mt-6">
+    <h2 class="text-lg font-bold">Existing Stock Movements</h2>
+    <div *ngIf="isLoading" class="text-center py-4">
+        <p class="text-gray-500">Loading movements...</p>
+    </div>
+    <div *ngIf="!isLoading && movements.length === 0" class="text-center py-4">
+        <p class="text-gray-500">No movements found.</p>
+    </div>
+    <div *ngFor="let movement of movements" class="p-4 mt-2 border rounded bg-white shadow">
+        <p><strong>Movement Type:</strong> {{ movement.movementType }}</p>
+        <p><strong>Source Bin:</strong> {{ movement.sourceBinCode }}</p>
+        <p><strong>Destination Bin:</strong> {{ movement.destinationBinCode }}</p>
+        <p><strong>Handling Unit ID:</strong> {{ movement.handlingUnitID }}</p>
+        <p><strong>Moved Qty:</strong> {{ movement.movedQty }}</p>
+        <p><strong>Movement Date:</strong> {{ movement.movementDate }}</p>
+        <p><strong>Executed By:</strong> {{ movement.executedBy }}</p>
+        <p><strong>Status:</strong> {{ movement.status }}</p>
+        <div class="mt-3 space-x-2">
+            <button (click)="editMovement(movement)"
+                class="px-3 py-1 text-white bg-yellow-500 rounded hover:bg-yellow-600 transition">
+                Edit
+            </button>
+            <button (click)="deleteMovement(movement.idStockMovement!)"
+                class="px-3 py-1 text-white bg-red-500 rounded hover:bg-red-600 transition">
+                Delete
+            </button>
+        </div>
+    </div>
+</div>

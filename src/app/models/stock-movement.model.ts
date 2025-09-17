@@ -7,9 +7,11 @@ export interface StockMovement {
   sourceBinCode?: string;
   destinationBinCode?: string;
   handlingUnitID?: number;
+  movedQty?: number; // Added to match DTO
+  movementDate?: string; // Added as string for date-time format
   executedBy?: string;
   status?: string;
-  sourceBin?: EWM_StorageBin; // Optional for nested data
+  sourceBin?: EWM_StorageBin;
   destinationBin?: EWM_StorageBin;
   handlingUnit?: HandlingUnit;
 }

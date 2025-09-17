@@ -1,0 +1,101 @@
+<div *ngIf="alertMessage" class="p-4 mb-4 text-white rounded" [ngClass]="{
+  'bg-green-500': alertType === 'success',
+  'bg-red-500': alertType === 'error'
+}">
+    {{ alertMessage }}
+    <button (click)="alertMessage = null; alertType = null" class="float-right text-white underline">Dismiss</button>
+</div>
+
+<div class="flex justify-between items-center mb-4">
+    <h1 class="text-xl font-bold">Handling Units</h1>
+    <button (click)="toggleForm()" class="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600 transition">
+        {{ isFormVisible ? 'Cancel' : 'Add New Handling Unit' }}
+    </button>
+</div>
+
+<form *ngIf="isFormVisible" (ngSubmit)="saveUnit()" class="mt-4 space-y-6 bg-gray-50 p-6 rounded-lg shadow">
+    <div>
+        <label for="serialNumber" class="block text-sm font-medium text-gray-700">Serial Number</label>
+        <input id="serialNumber" [(ngModel)]="selectedUnit.serialNumber" name="serialNumber"
+            class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Enter serial number" required>
+    </div>
+
+    <div>
+        <label for="item" class="block text-sm font-medium text-gray-700">Item</label>
+        <input id="item" [(ngModel)]="selectedUnit.item" name="item"
+            class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Enter item">
+    </div>
+
+    <div>
+        <label for="quantity" class="block text-sm font-medium text-gray-700">Quantity</label>
+        <input id="quantity" type="number" [(ngModel)]="selectedUnit.quantity" name="quantity"
+            class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Enter quantity" required>
+    </div>
+
+    <div>
+        <label for="weight" class="block text-sm font-medium text-gray-700">Weight</label>
+        <input id="weight" type="number" step="0.01" [(ngModel)]="selectedUnit.weight" name="weight"
+            class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Enter weight (e.g., 10.5)" required>
+    </div>
+
+    <div>
+        <label for="productionDate" class="block text-sm font-medium text-gray-700">Production Date</label>
+        <input id="productionDate" type="date" [(ngModel)]="selectedUnit.productionDate" name="productionDate"
+            class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+    </div>
+
+    <div>
+        <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
+        <select id="status" [(ngModel)]="selectedUnit.status" name="status"
+            class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+            <option value="">Select Status</option>
+            <option value="Active">Active</option>
+            <option value="Inactive">Inactive</option>
+            <option value="Pending">Pending</option>
+            <!-- Add more based on your backend Status options -->
+        </select>
+    </div>
+
+    <div class="flex space-x-4">
+        <button type="submit" class="px-4 py-2 text-white bg-green-500 rounded hover:bg-green-600 transition"
+            [disabled]="!selectedUnit.serialNumber || !selectedUnit.quantity || !selectedUnit.weight || !selectedUnit.productionDate || !selectedUnit.status">
+            {{ isEditing ? 'Update Unit' : 'Create Unit' }}
+        </button>
+        <button type="button" (click)="toggleForm()"
+            class="px-4 py-2 text-gray-700 bg-gray-200 rounded hover:bg-gray-300 transition">
+            Cancel
+        </button>
+    </div>
+</form>
+
+<div class="mt-6">
+    <h2 class="text-lg font-bold">Existing Handling Units</h2>
+    <div *ngIf="isLoading" class="text-center py-4">
+        <p class="text-gray-500">Loading units...</p>
+    </div>
+    <div *ngIf="!isLoading && units.length === 0" class="text-center py-4">
+        <p class="text-gray-500">No units found.</p>
+    </div>
+    <div *ngFor="let unit of units" class="p-4 mt-2 border rounded bg-white shadow">
+        <p><strong>Serial Number:</strong> {{ unit.serialNumber }}</p>
+        <p><strong>Item:</strong> {{ unit.item }}</p>
+        <p><strong>Quantity:</strong> {{ unit.quantity }}</p>
+        <p><strong>Weight:</strong> {{ unit.weight }}</p>
+        <p><strong>Production Date:</strong> {{ unit.productionDate }}</p>
+        <p><strong>Status:</strong> {{ unit.status }}</p>
+        <div class="mt-3 space-x-2">
+            <button (click)="editUnit(unit)"
+                class="px-3 py-1 text-white bg-yellow-500 rounded hover:bg-yellow-600 transition">
+                Edit
+            </button>
+            <button (click)="deleteUnit(unit.idHandlingUnit!)"
+                class="px-3 py-1 text-white bg-red-500 rounded hover:bg-red-600 transition">
+                Delete
+            </button>
+        </div>
+    </div>
+</div>
