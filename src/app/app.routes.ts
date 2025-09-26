@@ -28,6 +28,10 @@ import { EwmStorageBinsComponent } from './pages/ewm-storage-bins/ewm-storage-bi
 import { EwmStorageBinDetailsComponent } from './pages/ewm-storage-bin-details/ewm-storage-bin-details.component';
 import { HandlingUnitsComponent } from './pages/handling-units/handling-units.component';
 import { StockMovementsComponent } from './pages/stock-movements/stock-movements.component';
+import { BinListComponent } from './groups/bin-list/bin-list.component';
+import { GroupFormComponent } from './groups/group-form/group-form.component';
+import { GroupListComponent } from './groups/group-list/group-list.component';
+import { BinFormComponent } from './groups/bin-form/bin-form.component';
 
 export const routes: Routes = [
   {
@@ -165,6 +169,13 @@ export const routes: Routes = [
         component: StockMovementsComponent,
         title: 'Stock Movements',
       },
+      { path: 'groups', component: GroupListComponent,title: 'park groups', },
+  { path: 'group-form', component: GroupFormComponent, title: 'park group form', },
+  { path: 'group-form/:id', component: GroupFormComponent,title: 'group-form', },
+  { path: 'bins/:id', component: BinListComponent ,title: 'group bins',},
+  { path: 'bin-form/:groupId', component: BinFormComponent ,title: 'add bins',}, // For add
+  { path: 'bin-form/:groupId/:binId', component: BinFormComponent ,title: 'edir bins',}, // For edit
+  
     ],
   },
   // auth pages

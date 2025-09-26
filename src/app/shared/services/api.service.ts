@@ -230,6 +230,10 @@ getStorageTypes(): Observable<EWM_StorageType[]> {
     return this.http.delete<void>(`${this.apiUrl}/EWM_StorageBin/${id}`)
       .pipe(catchError(this.handleError));
   }
+  assignHandlingUnitToBin(binId: number, unitId: number): Observable<void> {
+  return this.http.put<void>(`${this.apiUrl}/EWM_StorageBin/${binId}/handlingunits/${unitId}`, {}, this.httpOptions)
+    .pipe(catchError(this.handleError));
+}
 
   // EWM_StorageBin_Rules CRUD (Added EWM_ for consistency)
   getStorageBinRules(): Observable<EWM_StorageBin_Rules[]> {

@@ -1,0 +1,23 @@
+.relative {
+  position: relative;
+}
+
+.group-hover\:block:hover {
+  display: block;
+}
+
+@keyframes blink {
+  0% {
+    background-color: rgb(34 197 94); /* green-500 */
+  }
+  50% {
+    background-color: rgb(59 130 246); /* blue-500 */
+  }
+  100% {
+    background-color: rgb(34 197 94); /* green-500 */
+  }
+}
+
+.animate-blink {
+  animation: blink 2s infinite;
+}

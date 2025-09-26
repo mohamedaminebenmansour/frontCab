@@ -6,4 +6,5 @@ export interface HandlingUnit {
   weight?: number;
   productionDate?: string;
   status?: string;
+  storageBinCode?: string;
 }

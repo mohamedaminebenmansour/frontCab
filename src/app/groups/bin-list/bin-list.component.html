@@ -1,0 +1,258 @@
+<div class="container mx-auto p-6 bg-gray-100 min-h-screen">
+    <h1 class="text-3xl font-bold mb-6 text-gray-800">Storage Bins for {{ group?.libelle }}</h1>
+
+    <div *ngIf="alertMessage" class="p-4 mb-4 text-white rounded" [ngClass]="{
+        'bg-green-500': alertType === 'success',
+        'bg-red-500': alertType === 'error'
+      }">
+        {{ alertMessage }}
+        <button (click)="alertMessage = null; alertType = null"
+            class="float-right text-white underline">Dismiss</button>
+    </div>
+
+    <div class="flex justify-end mb-4">
+        <button (click)="toggleForm()" class="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600 transition">
+            {{ isFormVisible ? 'Cancel' : 'Add New Storage Bin' }}
+        </button>
+    </div>
+
+    <form *ngIf="isFormVisible" (ngSubmit)="saveBin()" class="mt-4 space-y-6 bg-gray-50 p-6 rounded-lg shadow">
+        <div>
+            <label for="libCodeLocation" class="block text-sm font-medium text-gray-700">Lib Code Location</label>
+            <input id="libCodeLocation" [(ngModel)]="selectedBin.ewm_Lib_CodeLocation" name="ewm_Lib_CodeLocation"
+                class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Enter lib code location (e.g., BIN001)" required>
+        </div>
+
+        <div>
+            <label for="codeLocationGroupe" class="block text-sm font-medium text-gray-700">Code Location Groupe</label>
+            <select id="codeLocationGroupe" [(ngModel)]="selectedBin.codeLocationGroupe" name="codeLocationGroupe"
+                class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                <option value="">Select Location Groupe</option>
+                <option *ngFor="let group of binGroups" [value]="group.codeLocationGroupe">
+                    {{ group.codeLocationGroupe }} - {{ group.lib_LocationGroupe }}
+                </option>
+            </select>
+        </div>
+
+        <div>
+            <label for="ewmCodeStorageType" class="block text-sm font-medium text-gray-700">EWM Code Storage
+                Type</label>
+            <select id="ewmCodeStorageType" [(ngModel)]="selectedBin.ewm_Code_StorageType" name="ewm_Code_StorageType"
+                class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                <option value="">Select Storage Type</option>
+                <option *ngFor="let type of storageTypes" [value]="type.code">
+                    {{ type.code }} - {{ type.lib }}
+                </option>
+            </select>
+        </div>
+
+        <div>
+            <label for="codeStorageBinType" class="block text-sm font-medium text-gray-700">Code Storage Bin
+                Type</label>
+            <select id="codeStorageBinType" [(ngModel)]="selectedBin.codeStorageBinType" name="codeStorageBinType"
+                class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                <option value="">Select Bin Type</option>
+                <option *ngFor="let binType of binTypes" [value]="binType.codeStorageBinType">
+                    {{ binType.codeStorageBinType }} - {{ binType.lib_LocationType }}
+                </option>
+            </select>
+        </div>
+
+        <!-- Park Display Groupe is pre-set in TS, no select needed -->
+
+        <div>
+            <label for="codeFIFOGroupe" class="block text-sm font-medium text-gray-700">Code FIFO Groupe</label>
+            <input id="codeFIFOGroupe" [(ngModel)]="selectedBin.code_FIFO_Groupe" name="code_FIFO_Groupe"
+                class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Enter FIFO groupe code (e.g., FIFO1)">
+        </div>
+
+        <div>
+            <label for="atorizedStatus" class="block text-sm font-medium text-gray-700">Atorized Status</label>
+            <select id="atorizedStatus" [(ngModel)]="selectedBin.atorizedStatus" name="atorizedStatus"
+                class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                <option value="">Select Atorized Status</option>
+                <option *ngFor="let status of atorizedStatuses" [value]="status.codeAtorisedStatus">
+                    {{ status.codeAtorisedStatus }} - {{ status.valueAtorisedStatus }}
+                </option>
+            </select>
+        </div>
+
+        <div>
+            <label for="item" class="block text-sm font-medium text-gray-700">Item</label>
+            <input id="item" [(ngModel)]="selectedBin.item" name="item"
+                class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Enter item (e.g., Cable)">
+        </div>
+
+        <div>
+            <label for="bulding" class="block text-sm font-medium text-gray-700">Bulding</label>
+            <input id="bulding" [(ngModel)]="selectedBin.bulding" name="bulding"
+                class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Enter bulding (e.g., B01)">
+        </div>
+
+        <div>
+            <label for="capacity" class="block text-sm font-medium text-gray-700">Capacity</label>
+            <input id="capacity" type="number" [(ngModel)]="selectedBin.capacity" name="capacity"
+                class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Enter capacity (e.g., 1000)" required>
+        </div>
+
+        <div class="flex items-center">
+            <input type="checkbox" id="qualityValidationMadatoryToAssign"
+                [(ngModel)]="selectedBin.qualityValidationMadatoryToAssign" name="qualityValidationMadatoryToAssign"
+                class="mr-2 h-4 w-4 text-blue-500 focus:ring-blue-500">
+            <label for="qualityValidationMadatoryToAssign" class="text-gray-700">Quality Validation Mandatory To
+                Assign</label>
+        </div>
+
+        <div class="flex items-center">
+            <input type="checkbox" id="staticLocation" [(ngModel)]="selectedBin.staticLocation" name="staticLocation"
+                class="mr-2 h-4 w-4 text-blue-500 focus:ring-blue-500">
+            <label for="staticLocation" class="text-gray-700">Static Location</label>
+        </div>
+
+        <div class="flex items-center">
+            <input type="checkbox" id="dynamicLocation" [(ngModel)]="selectedBin.dynamicLocation" name="dynamicLocation"
+                class="mr-2 h-4 w-4 text-blue-500 focus:ring-blue-500">
+            <label for="dynamicLocation" class="text-gray-700">Dynamic Location</label>
+        </div>
+
+        <div class="flex items-center">
+            <input type="checkbox" id="exacticLocation" [(ngModel)]="selectedBin.exacticLocation" name="exacticLocation"
+                class="mr-2 h-4 w-4 text-blue-500 focus:ring-blue-500">
+            <label for="exacticLocation" class="text-gray-700">Exactic Location</label>
+        </div>
+
+        <div class="flex space-x-4">
+            <button type="submit" class="px-4 py-2 text-white bg-green-500 rounded hover:bg-green-600 transition"
+                [disabled]="!validateBin()">
+                {{ isEditing ? 'Update Bin' : 'Create Bin' }}
+            </button>
+            <button type="button" (click)="toggleForm()"
+                class="px-4 py-2 text-gray-700 bg-gray-200 rounded hover:bg-gray-300 transition">
+                Cancel
+            </button>
+        </div>
+    </form>
+
+    <form *ngIf="isHUFormVisible" (ngSubmit)="saveHandlingUnit()"
+        class="mt-4 space-y-6 bg-gray-50 p-6 rounded-lg shadow">
+        <h2 class="text-2xl font-bold mb-4">Create New Handling Unit for Bin {{ currentBin?.ewm_Lib_CodeLocation }}</h2>
+
+        <div>
+            <label for="serialNumber" class="block text-sm font-medium text-gray-700">Serial Number</label>
+            <input id="serialNumber" [(ngModel)]="selectedHU.serialNumber" name="serialNumber"
+                class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Enter serial number (e.g., 312554)" required>
+        </div>
+
+        <div>
+            <label for="huItem" class="block text-sm font-medium text-gray-700">Item</label>
+            <input id="huItem" [(ngModel)]="selectedHU.item" name="item"
+                class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Enter item (e.g., cable)" required>
+        </div>
+
+        <div>
+            <label for="quantity" class="block text-sm font-medium text-gray-700">Quantity</label>
+            <input id="quantity" type="number" [(ngModel)]="selectedHU.quantity" name="quantity"
+                class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Enter quantity (e.g., 1000)" required>
+        </div>
+
+        <div>
+            <label for="weight" class="block text-sm font-medium text-gray-700">Weight</label>
+            <input id="weight" type="number" [(ngModel)]="selectedHU.weight" name="weight"
+                class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Enter weight (e.g., 1000)" required>
+        </div>
+
+        <div>
+            <label for="productionDate" class="block text-sm font-medium text-gray-700">Production Date</label>
+            <input id="productionDate" type="date" [(ngModel)]="selectedHU.productionDate" name="productionDate"
+                class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+        </div>
+
+        <div>
+            <label for="huStatus" class="block text-sm font-medium text-gray-700">Status</label>
+            <input id="huStatus" [(ngModel)]="selectedHU.status" name="status"
+                class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Enter status (e.g., Active)" required>
+        </div>
+
+        <div class="flex space-x-4">
+            <button type="submit" class="px-4 py-2 text-white bg-green-500 rounded hover:bg-green-600 transition"
+                [disabled]="!validateHU()">
+                Create and Assign HU
+            </button>
+            <button type="button" (click)="isHUFormVisible = false"
+                class="px-4 py-2 text-gray-700 bg-gray-200 rounded hover:bg-gray-300 transition">
+                Cancel
+            </button>
+        </div>
+    </form>
+
+    <div *ngIf="isLoading" class="text-center py-4">
+        <p class="text-gray-500">Loading bins...</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        @for (bin of bins; track bin.idewm_Location) {
+        <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
+            <h2 class="text-xl font-semibold mb-2 text-gray-800">{{ bin.ewm_Lib_CodeLocation }} [{{
+                calculateOccupancy(bin) }}%] 📦</h2>
+            <div class="border border-gray-300 p-4 rounded-md bg-gray-50">
+                <p class="mb-1"><strong>Location:</strong> {{ bin.ewm_Lib_CodeLocation }}</p>
+                <p class="mb-1"><strong>Type:</strong> {{ bin.codeStorageBinType }}</p>
+                <p class="mb-1"><strong>Status:</strong> {{ getStatus(bin) }}</p>
+                <p class="mb-1">
+                    <strong>HUs:</strong> {{ getHUsCount(bin) }} units
+                </p>
+                <div class="flex flex-wrap mt-2">
+                    @if (bin.handlingUnits && bin.handlingUnits.length > 0) {
+                    @for (hu of bin.handlingUnits; track hu.idHandlingUnit) {
+                    <div class="relative group m-1">
+                        <div class="w-6 h-6 rounded-full bg-green-500 animate-blink cursor-pointer"></div>
+                        <div
+                            class="absolute left-0 top-full mt-1 w-48 bg-white border border-gray-300 p-2 rounded-md shadow-md hidden group-hover:block z-10">
+                            <p><strong>ID:</strong> {{ hu.idHandlingUnit }}</p>
+                            <p><strong>Serial Number:</strong> {{ hu.serialNumber }}</p>
+                            <p><strong>Item:</strong> {{ hu.item }}</p>
+                            <p><strong>Quantity:</strong> {{ hu.quantity }}</p>
+                            <p><strong>Weight:</strong> {{ hu.weight }}</p>
+                            <p><strong>Production Date:</strong> {{ hu.productionDate | date }}</p>
+                            <p><strong>Status:</strong> {{ hu.status }}</p>
+                        </div>
+                    </div>
+                    }
+                    } @else {
+                    <p class="text-gray-500">No handling units available.</p>
+                    }
+                </div>
+                <p class="mb-1"><strong>Capacity:</strong> {{ bin.capacity }}</p>
+                <p class="mb-1"><strong>Building:</strong> {{ bin.bulding }}</p>
+                <p class="mb-1"><strong>Item:</strong> {{ bin.item }}</p>
+            </div>
+            <div class="mt-4 flex justify-end space-x-2">
+                <button (click)="editBin(bin)"
+                    class="px-3 py-1 text-white bg-yellow-500 rounded hover:bg-yellow-600 transition">
+                    Edit
+                </button>
+                <button (click)="deleteBin(bin.idewm_Location)"
+                    class="px-3 py-1 text-white bg-red-500 rounded hover:bg-red-600 transition">
+                    Delete
+                </button>
+                <button (click)="openHUForm(bin)"
+                    class="px-3 py-1 text-white bg-indigo-500 rounded hover:bg-indigo-600 transition">
+                    Add HU
+                </button>
+            </div>
+        </div>
+        } @empty {
+        <p class="text-gray-600 text-center col-span-full">No storage bins available for this group.</p>
+        }
+    </div>
+</div>
