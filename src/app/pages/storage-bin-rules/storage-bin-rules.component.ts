@@ -4,34 +4,17 @@ import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angula
 import { FormsModule } from '@angular/forms'; // Add this import for ngModel
 import { ApiService } from '../../shared/services/api.service'; // Adjust path as needed
 import { EWM_StorageBin_Rules, EWM_StorageBin } from '../../models'; // Adjust path
-import { LabelComponent } from '../../shared/components/form/label/label.component'; // Adjust path based on your project
-import { SelectComponent } from '../../shared/components/form/select/select.component'; // Adjust path based on your project
-/**
- * import { Component, OnInit } from '@angular/core';
-import { ApiService } from '../../shared/services/api.service';
-import { EWM_StorageBin_Rules, EWM_StorageType } from '../../models';
-import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
 
-@Component({
-  selector: 'app-ewm-storage-bin-rules',
-  standalone: true,
-  imports: [CommonModule, FormsModule],
-  templateUrl: './ewm-storage-bin-rules.component.html'
-})
-export class EWMStorageBinRulesComponent implements OnInit {
- */
 @Component({
   selector: 'app-storage-bin-rules',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, LabelComponent, SelectComponent],
-  templateUrl: './ewm-storage-bin-rules.component.html'
+  imports: [CommonModule, ReactiveFormsModule, FormsModule], // Add FormsModule here
+  templateUrl: './storage-bin-rules.component.html',
 })
-export class EWMStorageBinRulesComponent implements OnInit {
+export class StorageBinRulesComponent implements OnInit {
   rules: EWM_StorageBin_Rules[] = [];
   filteredRules: EWM_StorageBin_Rules[] = [];
   binCodes: string[] = [];
-  binOptions: { value: string; label: string }[] = []; // For custom select
   ruleForm: FormGroup;
   showModal = false;
   isEditMode = false;
@@ -63,7 +46,6 @@ export class EWMStorageBinRulesComponent implements OnInit {
   loadBinCodes(): void {
     this.apiService.getStorageBins().subscribe((bins) => {
       this.binCodes = [...new Set(bins.map((bin) => bin.ewm_Lib_CodeLocation).filter(Boolean))]; // Unique codes
-      this.binOptions = this.binCodes.map(code => ({ value: code, label: code })); // Map for select
       this.resetLocationStates();
     });
   }

@@ -66,22 +66,22 @@
             </button>
         </div>
 
-        <!-- Modal Body with Default Input Design Spacing -->
-        <form [formGroup]="ruleForm" (ngSubmit)="onSubmit()" class="space-y-6">
-            <div>
-                <app-label class="block text-gray-700">Source Storage type:</app-label>
-                <app-select [options]="binOptions" placeholder="Select Location"
-                    [value]="ruleForm.get('ewm_CodeLocation_FROM')?.value"
-                    (valueChange)="ruleForm.patchValue({ ewm_CodeLocation_FROM: $event })"
-                    className="w-full dark:bg-dark-900"></app-select>
+        <!-- Modal Body -->
+        <form [formGroup]="ruleForm" (ngSubmit)="onSubmit()">
+            <div class="mb-4">
+                <label class="block text-gray-700">Source Storage type:</label>
+                <select formControlName="ewm_CodeLocation_FROM" class="w-full p-2 border border-gray-300 rounded">
+                    <option value="">Select Location</option>
+                    <option *ngFor="let code of binCodes" [value]="code">{{ code }}</option>
+                </select>
                 <div *ngIf="ruleForm.get('ewm_CodeLocation_FROM')?.invalid && ruleForm.get('ewm_CodeLocation_FROM')?.touched"
                     class="text-red-500 text-sm">
                     Source is required.
                 </div>
             </div>
 
-            <div>
-                <app-label class="block text-green-700 font-bold">✅ Allowed Transfers To:</app-label>
+            <div class="mb-4">
+                <label class="block text-green-700 font-bold">✅ Allowed Transfers To:</label>
                 <div class="border border-gray-300 p-2 rounded flex flex-wrap">
                     <label *ngFor="let code of binCodes" class="mr-4">
                         <input type="checkbox" [checked]="locationStates[code]?.allowed"
@@ -91,8 +91,8 @@
                 </div>
             </div>
 
-            <div>
-                <app-label class="block text-red-700 font-bold">❌ Blocked Transfers To:</app-label>
+            <div class="mb-4">
+                <label class="block text-red-700 font-bold">❌ Blocked Transfers To:</label>
                 <div class="border border-gray-300 p-2 rounded flex flex-wrap">
                     <label *ngFor="let code of binCodes" class="mr-4">
                         <input type="checkbox" [checked]="locationStates[code]?.blocked"

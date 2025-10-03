@@ -32,6 +32,7 @@ import { BinListComponent } from './groups/bin-list/bin-list.component';
 import { GroupFormComponent } from './groups/group-form/group-form.component';
 import { GroupListComponent } from './groups/group-list/group-list.component';
 import { BinFormComponent } from './groups/bin-form/bin-form.component';
+import { StorageBinRulesComponent } from './pages/storage-bin-rules/storage-bin-rules.component';
 
 export const routes: Routes = [
   {
@@ -174,7 +175,8 @@ export const routes: Routes = [
   { path: 'group-form/:id', component: GroupFormComponent,title: 'group-form', },
   { path: 'bins/:id', component: BinListComponent ,title: 'group bins',},
   { path: 'bin-form/:groupId', component: BinFormComponent ,title: 'add bins',}, // For add
-  { path: 'bin-form/:groupId/:binId', component: BinFormComponent ,title: 'edir bins',}, // For edit
+  { path: 'bin-form/:groupId/:binId', component: BinFormComponent ,title: 'edit bins',}, // For edit
+{ path: 'storage-bin-rules', component: StorageBinRulesComponent,title:'Storage Bin Rules' }
   
     ],
   },

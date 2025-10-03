@@ -189,23 +189,23 @@ getStorageTypes(): Observable<EWM_StorageType[]> {
 
   // EWM_StorageType_Rules CRUD (Added EWM_ for consistency)
   getStorageTypeRules(): Observable<EWM_StorageType_Rules[]> {
-    return this.http.get<EWM_StorageType_Rules[]>(`${this.apiUrl}/EWMStorageTypeRules`)
+    return this.http.get<EWM_StorageType_Rules[]>(`${this.apiUrl}/StorageTypeRules`)
       .pipe(catchError(this.handleError));
   }
   getStorageTypeRule(id: number): Observable<EWM_StorageType_Rules> {
-    return this.http.get<EWM_StorageType_Rules>(`${this.apiUrl}/EWMStorageTypeRules/${id}`)
+    return this.http.get<EWM_StorageType_Rules>(`${this.apiUrl}/StorageTypeRules/${id}`)
       .pipe(catchError(this.handleError));
   }
   createStorageTypeRule(rule: EWM_StorageType_Rules): Observable<EWM_StorageType_Rules> {
-    return this.http.post<EWM_StorageType_Rules>(`${this.apiUrl}/EWMStorageTypeRules`, rule, this.httpOptions)
+    return this.http.post<EWM_StorageType_Rules>(`${this.apiUrl}/StorageTypeRules`, rule, this.httpOptions)
       .pipe(catchError(this.handleError));
   }
   updateStorageTypeRule(id: number, rule: EWM_StorageType_Rules): Observable<EWM_StorageType_Rules> {
-    return this.http.put<EWM_StorageType_Rules>(`${this.apiUrl}/EWMStorageTypeRules/${id}`, rule, this.httpOptions)
+    return this.http.put<EWM_StorageType_Rules>(`${this.apiUrl}/StorageTypeRules/${id}`, rule, this.httpOptions)
       .pipe(catchError(this.handleError));
   }
   deleteStorageTypeRule(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/EWMStorageTypeRules/${id}`)
+    return this.http.delete<void>(`${this.apiUrl}/StorageTypeRules/${id}`)
       .pipe(catchError(this.handleError));
   }
 
@@ -235,25 +235,26 @@ getStorageTypes(): Observable<EWM_StorageType[]> {
     .pipe(catchError(this.handleError));
 }
 
+
   // EWM_StorageBin_Rules CRUD (Added EWM_ for consistency)
   getStorageBinRules(): Observable<EWM_StorageBin_Rules[]> {
-    return this.http.get<EWM_StorageBin_Rules[]>(`${this.apiUrl}/EWMStorageTypeRules`)
+    return this.http.get<EWM_StorageBin_Rules[]>(`${this.apiUrl}/StorageBinRules`)
       .pipe(catchError(this.handleError));
   }
   getStorageBinRule(id: number): Observable<EWM_StorageBin_Rules> {
-    return this.http.get<EWM_StorageBin_Rules>(`${this.apiUrl}/EWMStorageTypeRules/${id}`)
+    return this.http.get<EWM_StorageBin_Rules>(`${this.apiUrl}/StorageBinRules/${id}`)
       .pipe(catchError(this.handleError));
   }
   createStorageBinRule(rule: EWM_StorageBin_Rules): Observable<EWM_StorageBin_Rules> {
-    return this.http.post<EWM_StorageBin_Rules>(`${this.apiUrl}/EWMStorageTypeRules`, rule, this.httpOptions)
+    return this.http.post<EWM_StorageBin_Rules>(`${this.apiUrl}/StorageBinRules`, rule, this.httpOptions)
       .pipe(catchError(this.handleError));
   }
   updateStorageBinRule(id: number, rule: EWM_StorageBin_Rules): Observable<EWM_StorageBin_Rules> {
-    return this.http.put<EWM_StorageBin_Rules>(`${this.apiUrl}/EWMStorageTypeRules/${id}`, rule, this.httpOptions)
+    return this.http.put<EWM_StorageBin_Rules>(`${this.apiUrl}/StorageBinRules/${id}`, rule, this.httpOptions)
       .pipe(catchError(this.handleError));
   }
   deleteStorageBinRule(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/EWMStorageTypeRules/${id}`)
+    return this.http.delete<void>(`${this.apiUrl}/StorageBinRules/${id}`)
       .pipe(catchError(this.handleError));
   }
 
