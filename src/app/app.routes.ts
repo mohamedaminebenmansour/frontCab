@@ -33,6 +33,8 @@ import { GroupFormComponent } from './groups/group-form/group-form.component';
 import { GroupListComponent } from './groups/group-list/group-list.component';
 import { BinFormComponent } from './groups/bin-form/bin-form.component';
 import { StorageBinRulesComponent } from './pages/storage-bin-rules/storage-bin-rules.component';
+import { UsersManagementComponent } from './pages/users-management/users-management.component';
+import { roleGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -176,7 +178,14 @@ export const routes: Routes = [
   { path: 'bins/:id', component: BinListComponent ,title: 'group bins',},
   { path: 'bin-form/:groupId', component: BinFormComponent ,title: 'add bins',}, // For add
   { path: 'bin-form/:groupId/:binId', component: BinFormComponent ,title: 'edit bins',}, // For edit
-{ path: 'storage-bin-rules', component: StorageBinRulesComponent,title:'Storage Bin Rules' }
+{ path: 'storage-bin-rules', component: StorageBinRulesComponent,title:'Storage Bin Rules' },
+{
+  path: 'users',
+  component: UsersManagementComponent,
+  title: 'User Management',
+  canActivate: [roleGuard],
+  data: { roles: ['SuperAdmin'] }
+},
   
     ],
   },

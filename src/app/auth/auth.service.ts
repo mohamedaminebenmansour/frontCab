@@ -82,4 +82,31 @@ export class AuthService {
     const payload = this.decodeToken(token);
     console.log('Decoded token payload for testing:', payload);
   }
+
+  getRoles(): string[] {
+    const token = this.getToken();
+    if (!token) {
+      console.log('getRoles: No token found, returning empty array');
+      return [];
+    }
+    const payload = this.decodeToken(token);
+    if (!payload) {
+      console.log('getRoles: Invalid token payload, returning empty array');
+      return [];
+    }
+    const roleClaim = payload['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+    if (!roleClaim) {
+      console.log('getRoles: No role claim found in token');
+      return [];
+    }
+    // Handle single string or array; our backend uses single role per user
+    const roles = Array.isArray(roleClaim) ? roleClaim : [roleClaim];
+    console.log('getRoles: Extracted roles:', roles);
+    // Validate against known roles
+    const validRoles = roles.filter(role => ['SuperAdmin', 'Admin', 'User'].includes(role));
+    if (validRoles.length !== roles.length) {
+      console.log('getRoles: Some invalid roles detected, filtering to valid ones');
+    }
+    return validRoles;
+  }
 }
